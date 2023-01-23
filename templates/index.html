@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black
+    }
+</style>
+
+<body>
+    <h1>Forum Registration!</h1>
+    <form action="/login" method="post">
+        <table>
+            <tr>
+                <th>First Name: <input type="text" name="firstname" value="" placeholder="first name" required></th>
+                <th>Last Name: <input type="text" name="lastname" value="" placeholder="last name" required></th>
+            </tr>
+            <tr>
+                <th>Username: <input type="text" name="username" placeholder="username" value="" minlength="5" maxlength="20" required></th>
+                <th>Password: <input type="password" name="password" placeholder="password" value="" required></th>
+            </tr>
+        </table>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+
+</body>
+
+</html>
