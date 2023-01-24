@@ -19,3 +19,11 @@ Authentication
 
 - client must be able to register as a new user on the forum
 - create a login session to access the forum and be able to add posts and comments.
+
+Instructions for user registration:
+
+Must ask for email
+When the email is already taken return an error response.
+Must ask for username
+Must ask for password
+The password must be encrypted when stored (this is a Bonus task)
