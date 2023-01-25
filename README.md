@@ -30,3 +30,5 @@ This project will help you learn about:
 - Manipulation of databases
 - The basics of encryption
 
+Objectives
+This project consists in creating a web forum that allows :
