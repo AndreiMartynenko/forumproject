@@ -16,8 +16,22 @@
 </style>
 
 <body>
+
+    {{if not .}}
+    <form action="/signup">
+        <input type="submit" value="Log In/Sign Up" >
+    </form>
+    {{else}}
+        {{.Username}}
+        <form action="/signout">
+            <input type="submit" value="Sign Out" >
+        </form>
+
+    {{end}}  
+
+
     <h1>Forum Registration!</h1>
-    <form action="/login" method="post">
+    <form action="/result" method="POST">
         <table>
             <tr>
                 <th>First Name: <input type="text" name="firstname" value="" placeholder="first name" required></th>
