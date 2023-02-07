@@ -16,4 +16,5 @@ https://www.smartdraw.com/entity-relationship-diagram/
 - You must use at least one SELECT, one CREATE and one INSERT queries.
 To know more about SQLite you can check the SQLite page.
 
+Authentication
 
