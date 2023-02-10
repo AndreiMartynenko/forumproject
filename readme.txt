@@ -22,5 +22,7 @@ In this segment the client must be able to register as a new user on the forum, 
 
 You should use cookies to allow each user to have only one opened session. Each of this sessions must contain an expiration date. It is up to you to decide how long the cookie stays "alive". The use of UUID is a Bonus task.
 
+Instructions for user registration:
+
 
 
