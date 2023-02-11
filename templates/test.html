@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  
+</head>
+<body>
+    <h2>Login</h2><br>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+<!-- <form action="/signup" method="POST">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <input type="submit" value="Submit">
+</form>  -->
+
+{{ if eq .UserName "Andrei" }}
+<span>Hi User</span>
+{{ else }}
+<span>User Not registred</span>
+{{ end }}
+
+<ul>
+    {{ range .Hobbies }}
+    <li><b>{{ . }}</b></li>
+    {{ else }}
+    <li> List is empty</li>
+    {{ end }}
+</ul>
+
+<p>User: {{ .UserName}}</p>
+<p>User: {{ .Email}}</p>
+<p>User: {{ .Password}}</p>
+
+<br><br>
+{{if .}}
+    {{.}}
+{{end}}
+
+<script language="javascript">
+    function check(form)
+    {
+   
+    if(form.username.value && form.password.value)
+     {
+   
+   alert("Welcome to Forum");
+   var username = document.getElementById("username").value;
+   document.write("Welcome " + username);
+   
+      }
+      else
+      {
+       alert("Error Password or Username");
+       }
+      }
+   
+      </script>
+    
+</body>
+</html>
+

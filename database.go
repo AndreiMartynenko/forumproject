@@ -1,118 +1,143 @@
 package main
 
-import (
-	"database/sql"
-	"fmt"
+// import (
+// 	"database/sql"
+// 	"fmt"
+// 	"net/http"
+// 	"text/template"
+// 	"unicode"
 
-	//driver for sqlite3
-	_ "github.com/mattn/go-sqlite3"
-)
+// 	_ "github.com/mattn/go-sqlite3"
+// 	"golang.org/x/crypto/bcrypt"
+// )
 
-// _ is here to stop alerting "I am not using this driver"
+// var tpl *template.Template
+// var db *sql.DB
+// var port = ":8080"
 
-//Creating database
-
-/* We’re using db.Query() to send the query to the database. We check the error, as usual.
-We defer rows.Close(). This is very important.
-We iterate over the rows with rows.Next().
-We read the columns in each row into variables with rows.Scan().
-*/
-
-func createUsersTable() /**NewUserDataBase*/ {
-	db, err := sql.Open("sqlite3", "forum.db")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	users_table := `CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY,
-        username TEXT NOT NULL,
-        email TEXT NOT NULL,
-        password TEXT NOT NULL);`
-	query, err := db.Prepare(users_table)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	query.Exec()
-	fmt.Println("Table created successfully!")
-
-	query.Close()
-	db.Close()
-}
-
-func getUsers() *[]User {
-	db, err := sql.Open("sqlite3", "forum.db")
-	if err != nil {
-		fmt.Println(err)
-		return nil
-	}
-	row, err := db.Query("SELECT * FROM users")
-	if err != nil {
-		fmt.Println(err)
-		return nil
-	}
-	defer row.Close()
-
-	users := []User{}
-	for row.Next() { // Iterate and fetch the records from result cursor
-		user := User{}
-		row.Scan(&(user.Id), &(user.Username), &(user.Email), &(user.Password))
-		users = append(users, user)
-		fmt.Println(users)
-	}
-	return &users
-}
-
-func saveUser(user *User) {
-	db, err := sql.Open("sqlite3", "forum.db")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	insertUser := "INSERT INTO users (username, email, password) VALUES(?, ?, ?)"
-	_, err = db.Exec(insertUser, user.Username, user.Email, user.Password)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	db.Close()
-
-}
-
-func getUserByEmailAndPassword(userEmail string, userPswd string) *User {
-	// Establish connection. To connect with the database, we call the Open() function on the sql instance like so:
-	db, err := sql.Open("sqlite3", "forum.db")
-	if err != nil {
-		db.Close()
-		fmt.Println(err)
-		return nil
-	}
-	row, err := db.Query("SELECT * FROM users WHERE email = ? AND password = ?", userEmail, userPswd)
-	if err != nil {
-		row.Close()
-		db.Close()
-		fmt.Println(err)
-		return nil
-	}
-	for row.Next() {
-		user := User{}
-		row.Scan(&(user.Id), &(user.Username), &(user.Email), &(user.Password))
-		row.Close()
-		db.Close()
-		return &user
-	}
-	row.Close()
-	db.Close()
-	return nil
-}
-
-// Check if username, email, password exist.
-// func validEmail(email string) bool {
-// 	_, err := mail.ParseAddress(email)
-// 	return err == nil
-
+// func main() {
+// 	tpl, _ = template.ParseGlob("templates/*.html")
+// 	var err error
+// 	db, err = sql.Open("sqlite3", "table.db")
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
+// 	defer db.Close()
+// 	http.HandleFunc("/register", registerHandler)
+// 	http.HandleFunc("/registerauth", registerAuthHandler)
+// 	fmt.Println("Started on port: 8080")
+// 	http.ListenAndServe(port, nil)
 // }
 
-//requesting data from db users for email and pswd to check for their existing
+// func registerHandler(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("registerHandler is running")
+// 	tpl.ExecuteTemplate(w, "register.html", nil)
+// }
+
+// func registerAuthHandler(w http.ResponseWriter, r *http.Request) {
+
+// 	/*
+
+// 	   1. check username criteria
+// 	   2. check password criteria
+// 	   3. check if username is already exists in database
+// 	   4. create bcrypt hash from password
+// 	   5. insert username and password hash in database
+
+// 	*/
+
+// 	fmt.Println("registerAuthHandler is running")
+// 	r.ParseForm()
+// 	username := r.FormValue("username")
+// 	//check username for only alphanumeric characters
+// 	var nameAlphaNumeric = true
+// 	for _, char := range username {
+// 		// func Isletter(r rune) bool, func IsNUmber (r rune) bool
+// 		// if !unicode.IsLetter(char) && !unicode.IsNumber(char) {
+// 		if unicode.IsLetter(char) == false && unicode.IsNumber(char) == false {
+// 			nameAlphaNumeric = false
+// 		}
+// 	}
+// 	// check username length
+// 	var nameLength bool
+// 	if 5 <= len(username) && len(username) <= 50 {
+// 		nameLength = true
+// 	}
+// 	// check password criteria
+// 	password := r.FormValue("password")
+// 	fmt.Println("password:", password, "\npswdLength:", len(password))
+// 	// variables that must pass for password creation criteria
+// 	var pswdLowercase, pswdUppercase, pswdNumber, pswdSpecial, pswdLength, pswdNoSpaces bool
+// 	pswdNoSpaces = true
+// 	for _, char := range password {
+// 		switch {
+// 		// func IsLower(r rune) bool
+// 		case unicode.IsLower(char):
+// 			pswdLowercase = true
+// 		// func IsUpper(r rune) bool
+// 		case unicode.IsUpper(char):
+// 			pswdUppercase = true
+// 		// func IsNumber(r rune) bool
+// 		case unicode.IsNumber(char):
+// 			pswdNumber = true
+// 		// func IsPunct(r rune) bool, func IsSymbol(r rune) bool
+// 		case unicode.IsPunct(char) || unicode.IsSymbol(char):
+// 			pswdSpecial = true
+// 		// func IsSpace(r rune) bool, type rune = int32
+// 		case unicode.IsSpace(int32(char)):
+// 			pswdNoSpaces = false
+// 		}
+// 	}
+// 	if 11 < len(password) && len(password) < 60 {
+// 		pswdLength = true
+// 	}
+// 	fmt.Println("pswdLowercase:", pswdLowercase, "\npswdUppercase:", pswdUppercase, "\npswdNumber:", pswdNumber, "\npswdSpecial:", pswdSpecial, "\npswdLength:", pswdLength, "\npswdNoSpaces:", pswdNoSpaces, "\nnameAlphaNumeric:", nameAlphaNumeric, "\nnameLength:", nameLength)
+// 	if !pswdLowercase || !pswdUppercase || !pswdNumber || !pswdSpecial || !pswdLength || !pswdNoSpaces || !nameAlphaNumeric || !nameLength {
+// 		tpl.ExecuteTemplate(w, "register.html", "please check username and password criteria")
+// 		return
+// 	}
+// 	// check if username already exists for availability
+// 	stmt := "SELECT UserID FROM bcrypt WHERE username = ?"
+// 	row := db.QueryRow(stmt, username)
+// 	var uID string
+// 	err := row.Scan(&uID)
+// 	if err != sql.ErrNoRows {
+// 		fmt.Println("username already exists, err:", err)
+// 		tpl.ExecuteTemplate(w, "register.html", "username already taken")
+// 		return
+// 	}
+// 	// create hash from password
+// 	var hash []byte
+// 	// func GenerateFromPassword(password []byte, cost int) ([]byte, error)
+// 	hash, err = bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+// 	if err != nil {
+// 		fmt.Println("bcrypt err:", err)
+// 		tpl.ExecuteTemplate(w, "register.html", "there was a problem registering account")
+// 		return
+// 	}
+// 	fmt.Println("hash:", hash)
+// 	fmt.Println("string(hash):", string(hash))
+// 	// func (db *DB) Prepare(query string) (*Stmt, error)
+// 	var insertStmt *sql.Stmt
+// 	insertStmt, err = db.Prepare("INSERT INTO bcrypt (Username, Hash) VALUES (?, ?);")
+// 	if err != nil {
+// 		fmt.Println("error preparing statement:", err)
+// 		tpl.ExecuteTemplate(w, "register.html", "there was a problem registering account")
+// 		return
+// 	}
+// 	defer insertStmt.Close()
+// 	var result sql.Result
+// 	//  func (s *Stmt) Exec(args ...interface{}) (Result, error)
+// 	result, err = insertStmt.Exec(username, hash)
+// 	rowsAff, _ := result.RowsAffected()
+// 	lastIns, _ := result.LastInsertId()
+// 	fmt.Println("rowsAff:", rowsAff)
+// 	fmt.Println("lastIns:", lastIns)
+// 	fmt.Println("err:", err)
+// 	if err != nil {
+// 		fmt.Println("error inserting new user")
+// 		tpl.ExecuteTemplate(w, "register.html", "there was a problem registering account")
+// 		return
+// 	}
+// 	fmt.Fprint(w, "congrats, your account has been successfully created")
+// }

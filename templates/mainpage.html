@@ -81,7 +81,7 @@
                     <nav class="nav nav-masthead justify-content-center float-md-end">
                         <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/">Main Page</a>
                         <a class="nav-link fw-bold py-1 px-0" href="/createpost">New Post</a>
-                        <a class="nav-link fw-bold py-1 px-0" href="newcomment">New Comment</a>
+                        <a class="nav-link fw-bold py-1 px-0" href="/aboutforum">About Forum</a>
                     </nav>
                 </div>
             </header>
@@ -90,24 +90,14 @@
             <br>
             <br>
             <br>
-        
-            <form action="/mainpage" method="POST">
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username"><br>
-                <label for="email">Email:</label><br>
-                <input type="text" id="email" name="email"><br>
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password"><br><br>
-                <input type="submit" value="Submit">
-            </form>
 
             <main class="px-3">
-                <h1>Latest post</h1>
-                <p class="lead"> User: {{ .UserName}}<br>Email: {{ .Email}}<br>Password: {{ .Password}}<br>Hobbies: {{ .Hobbies}}</p>
+                <h1>Nice to see you on Forum</h1>
+                <p class="lead"> User: {{ .UserName}}</p>
+                <p class="lead"> User Post: {{ . }}</p>
                 <p class="lead">
                     <a href="#" class="btn btn-lg btn-light fw-bold border-white bg-white">Learn more</a>
                 </p>
-
             </main>
 
             <footer class="mt-auto text-white-50">
