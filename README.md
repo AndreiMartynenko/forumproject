@@ -20,4 +20,4 @@ You must use at least one SELECT, one CREATE and one INSERT queries.
 To know more about SQLite you can check the SQLite page.
 
 Authentication
-
+In this segment the client must be able to register as a new user on the forum, by inputting their credentials. You also have to create a login session to access the forum and be able to add posts and comments.
