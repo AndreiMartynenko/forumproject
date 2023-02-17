@@ -26,5 +26,6 @@ You should use cookies to allow each user to have only one opened session. Each 
 
 Instructions for user registration:
 - Must ask for email
+- Check the username and password
 
 
