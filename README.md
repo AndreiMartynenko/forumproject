@@ -25,7 +25,11 @@ In this segment the client must be able to register as a new user on the forum, 
 You should use cookies to allow each user to have only one opened session. Each of this sessions must contain an expiration date. It is up to you to decide how long the cookie stays "alive". The use of UUID is a Bonus task.
 
 Instructions for user registration:
-- Must ask for email
-- Check the username and password
+
+Must ask for email
+When the email is already taken return an error response.
+Must ask for username
+Must ask for password
+The password must be encrypted when stored (this is a Bonus task)
 
 
