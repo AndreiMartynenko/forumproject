@@ -31,5 +31,6 @@ When the email is already taken return an error response.
 Must ask for username
 Must ask for password
 The password must be encrypted when stored (this is a Bonus task)
+The forum must be able to check if the email provided is present in the database and if all
 
 
