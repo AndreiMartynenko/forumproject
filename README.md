@@ -33,6 +33,9 @@ Must ask for password
 The password must be encrypted when stored (this is a Bonus task)
 The forum must be able to check if the email provided is present in the database and if all credentials are correct. It will check if the password is the same with the one provided and, if the password is not the same, it will return an error response.
 
+Communication
+In order for users to communicate between each other, they will have to be able to create posts and comments.
+
 Likes and Dislikes
 Only registered users will be able to like or dislike posts and comments.
 
